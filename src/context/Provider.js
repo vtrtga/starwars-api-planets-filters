@@ -13,6 +13,7 @@ export default function Provider({ children }) {
     const resJson = await res.json();
     const { results } = resJson;
     console.log(results);
+    delete results.residents;
     setPlanets(results);
     setLoading(false);
   };

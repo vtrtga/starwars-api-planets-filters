@@ -8,6 +8,12 @@ export default function Table() {
     'URL'];
   return (
     <div>
+      <select>
+        <option>maior que</option>
+        <option>menor que</option>
+        <option>igual a</option>
+      </select>
+      <input />
       <input
         onChange={ onChangeInput }
         data-testid="name-filter"
