@@ -49,7 +49,7 @@ export default function Table() {
         data-testid="column-filter"
         onChange={ handleOnChangeType }
       >
-        {collumns.map((collumn, index) => (
+        {collumns.map((collumn, index) => ( // Colunas com tipos do filtro
           <option
             key={ index }
             value={ collumn }

@@ -49,6 +49,7 @@ export default function Provider({ children }) {
     const { value } = target;
     setFilterType(value);
   };
+
   useEffect(() => {
     fetchApi();
   }, []);
@@ -63,15 +64,16 @@ export default function Provider({ children }) {
 
   const addNewFilter = (newFilter) => {
     setNewFilter([...allFilters, newFilter]);
+    setCollumns([...collumns.filter((c) => c !== newFilter.type)]);
   };
   useEffect(() => {
-    const planetsClone = [...planets];
+    // const planetsClone = [...planets];
     setFilter([...planets]);
     const numericFilter = () => {
-      console.log(planetsClone);
+      // console.log(planetsClone);
       if (allFilters.length > 0) {
         allFilters.forEach(({ type, comparission, value }) => {
-          console.log(type, comparission, value);
+          // console.log(type, comparission, value);
           if (comparission === 'menor que') {
             setFilter(filteredPlanets.filter(
               (p) => Number(p[type]) < Number(value),
