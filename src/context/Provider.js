@@ -16,11 +16,11 @@ export default function Provider({ children }) {
   const [isLoading, setLoading] = useState(true);
   const [planets, setPlanets] = useState([]);
   const [filteredPlanets, setFilter] = useState([]);
-  const [filterType, setFilterType] = useState('population');
+  const [collumns, setCollumns] = useState(collumnsArray);
+  const [filterType, setFilterType] = useState(collumns[0]);
   const [greaterLessOrEqual, setGreaterLessOrEqual] = useState('maior que');
   const [filterNumberValue, setFilterNumberValue] = useState(0);
   const [allFilters, setNewFilter] = useState([]);
-  const [collumns, setCollumns] = useState(collumnsArray);
 
   function removeResidents(entry) {
     delete entry.residents;
@@ -64,7 +64,7 @@ export default function Provider({ children }) {
 
   const addNewFilter = (newFilter) => {
     setNewFilter([...allFilters, newFilter]);
-    setCollumns([...collumns.filter((c) => c !== newFilter.type)]);
+    // setFilterType(collumns[0]);
   };
   useEffect(() => {
     // const planetsClone = [...planets];
@@ -78,15 +78,22 @@ export default function Provider({ children }) {
             setFilter(filteredPlanets.filter(
               (p) => Number(p[type]) < Number(value),
             ));
+            setCollumns([...collumns.filter((c) => c !== type)]); ///
+            // setFilterType(...collumns.filter((c) => c !== type)[0]);
           } else if (comparission === 'maior que') {
             setFilter(filteredPlanets.filter(
               (p) => Number(p[type]) > Number(value),
             ));
+            setCollumns([...collumns.filter((c) => c !== type)]); ///
+            // setFilterType(...collumns.filter((c) => c !== type)[0]);
           } else {
             setFilter(filteredPlanets.filter(
-              (p) => p[type] === value,
+              (p) => Number(p[type]) === Number(value),
             ));
+            setCollumns([...collumns.filter((c) => c !== type)]); ///
+            // setFilterType(...collumns.filter((c) => c !== type)[0]);
           }
+          setFilterType(...collumns.filter((c) => c !== type));
         });
       }
     };
