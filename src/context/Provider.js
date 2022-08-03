@@ -53,7 +53,7 @@ export default function Provider({ children }) {
   useEffect(() => {
     fetchApi();
   }, [setLoading, setCollumns, setFilter, setFilterType, setFilterNumberValue,
-    setNewFilter, setPlanets, setGreaterLessOrEqual]);
+    setNewFilter, setPlanets, setGreaterLessOrEqual, fetchApi]);
 
   const onChangeInput = ({ target }) => {
     const { value } = target;
