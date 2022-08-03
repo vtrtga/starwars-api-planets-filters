@@ -52,7 +52,8 @@ export default function Provider({ children }) {
 
   useEffect(() => {
     fetchApi();
-  }, []);
+  }, [setLoading, setCollumns, setFilter, setFilterType, setFilterNumberValue,
+    setNewFilter, setPlanets, setGreaterLessOrEqual]);
 
   const onChangeInput = ({ target }) => {
     const { value } = target;
