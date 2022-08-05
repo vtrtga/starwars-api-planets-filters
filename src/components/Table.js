@@ -6,7 +6,8 @@ export default function Table() {
     handleOnChangeType, onChangeGreaterLessOrEqual,
     onChangeFilterValue,
     filterNumberValue, addNewFilter, greaterLessOrEqual,
-    filterType, allFilters, setNewFilter, collumns } = useContext(Context);
+    filterType, allFilters, setNewFilter, collumns,
+    filteredPlanets2 } = useContext(Context);
   const headers = ['Name', 'Rotation Period', 'Orbital Period', 'Diameter', 'Climate',
     'Gravity', 'Terrain', 'Surface Water', 'Population', 'Films', 'Created', 'Edited',
     'URL'];
@@ -16,6 +17,7 @@ export default function Table() {
       (obj) => obj,
     ).filter((i) => i.type !== value)];
     setNewFilter(remFilters);
+    setFilter(filteredPlanets2);
   };
 
   const removeAllFilters = (e) => {

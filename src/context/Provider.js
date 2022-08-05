@@ -16,26 +16,18 @@ export default function Provider({ children }) {
   const [isLoading, setLoading] = useState(true);
   const [planets, setPlanets] = useState([]);
   const [filteredPlanets, setFilter] = useState([]);
+  const [filteredPlanets2, setFilter2] = useState([]);
   const [collumns, setCollumns] = useState(collumnsArray);
   const [filterType, setFilterType] = useState(collumns[0]);
   const [greaterLessOrEqual, setGreaterLessOrEqual] = useState('maior que');
   const [filterNumberValue, setFilterNumberValue] = useState(0);
   const [allFilters, setNewFilter] = useState([]);
+  console.log(filteredPlanets);
 
   function removeResidents(entry) {
     delete entry.residents;
     return entry;
   }
-
-  const fetchApi = async () => {
-    const url = 'https://swapi-trybe.herokuapp.com/api/planets/';
-    const res = await fetch(url);
-    const resJson = await res.json();
-    const { results } = resJson;
-    setPlanets(results.map(removeResidents));
-    setFilter(results.map(removeResidents));
-    setLoading(false);
-  };
 
   const onChangeFilterValue = ({ target }) => {
     const { value } = target;
@@ -51,9 +43,18 @@ export default function Provider({ children }) {
   };
 
   useEffect(() => {
+    const fetchApi = async () => {
+      const url = 'https://swapi-trybe.herokuapp.com/api/planets/';
+      const res = await fetch(url);
+      const resJson = await res.json();
+      const { results } = resJson;
+      setPlanets(results.map(removeResidents));
+      setFilter(results.map(removeResidents));
+      setFilter2(results.map(removeResidents));
+      setLoading(false);
+    };
     fetchApi();
-  }, [setLoading, setCollumns, setFilter, setFilterType, setFilterNumberValue,
-    setNewFilter, setPlanets, setGreaterLessOrEqual, fetchApi]);
+  }, []);
 
   const onChangeInput = ({ target }) => {
     const { value } = target;
@@ -103,6 +104,8 @@ export default function Provider({ children }) {
   [allFilters]);
 
   const context = {
+    setFilter,
+    filteredPlanets2,
     setCollumns,
     collumns,
     setNewFilter,
