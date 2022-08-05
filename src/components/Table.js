@@ -7,7 +7,7 @@ export default function Table() {
     onChangeFilterValue,
     filterNumberValue, addNewFilter, greaterLessOrEqual,
     filterType, allFilters, setNewFilter, collumns,
-    filteredPlanets2 } = useContext(Context);
+    filteredPlanets2, setFilter } = useContext(Context);
   const headers = ['Name', 'Rotation Period', 'Orbital Period', 'Diameter', 'Climate',
     'Gravity', 'Terrain', 'Surface Water', 'Population', 'Films', 'Created', 'Edited',
     'URL'];
