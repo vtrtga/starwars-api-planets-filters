@@ -1,5 +1,5 @@
 import React from "react";
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import App from "../App";
 import testData from "../mock/mockData";
@@ -149,10 +149,23 @@ test("Remover um filtro", async () => {
 });
 
 test("Testa radios", () => {
-  render(<App/>)
-const radioAsc = screen.getByTestId('column-sort-input-asc');
-const radioDesc = screen.getByTestId('column-sort-input-desc');
+  jest.spyOn(global, "fetch");
+  global.fetch.mockResolvedValue({
+    json: jest.fn().mockResolvedValue(testData),
+  });
+  render(<App />);
 
-expect(radioAsc).toBeInTheDocument();
-expect(radioDesc).toBeInTheDocument();
+  const sortInput = screen.getByTestId('column-sort');
+    const ascRadio = screen.getByTestId('column-sort-input-asc');
+    const descRadio = screen.getByTestId('column-sort-input-desc');
+    const sortButton = screen.getByTestId('column-sort-button');
+    expect(sortInput).toHaveProperty('value', 'population');
+    userEvent.selectOptions(sortInput, 'orbital_period');
+    expect(sortInput).toHaveProperty('value', 'orbital_period');
+    userEvent.selectOptions(sortInput, 'population');
+    expect(sortInput).toHaveProperty('value', 'population');
+    userEvent.click(ascRadio);
+    userEvent.click(sortButton);
+    userEvent.click(descRadio);
+    userEvent.click(sortButton);
 })

@@ -33,7 +33,6 @@ export default function Provider({ children }) {
   const [greaterLessOrEqual, setGreaterLessOrEqual] = useState('maior que');
   const [filterNumberValue, setFilterNumberValue] = useState(0);
   const [allFilters, setNewFilter] = useState([]);
-  console.log(filteredPlanets);
 
   function removeResidents(entry) {
     delete entry.residents;
