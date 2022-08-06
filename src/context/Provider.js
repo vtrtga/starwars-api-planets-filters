@@ -14,7 +14,18 @@ export default function Provider({ children }) {
   // const newCollumns = [...collumnsArray];
 
   const [isLoading, setLoading] = useState(true);
+  const [sortOptions, setSortOptions] = useState([
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ]);
   const [planets, setPlanets] = useState([]);
+  const [sortValue, setSortValue] = useState({
+    column: 'population',
+    sort: 'ASC',
+  });
   const [filteredPlanets, setFilter] = useState([]);
   const [filteredPlanets2, setFilter2] = useState([]);
   const [collumns, setCollumns] = useState(collumnsArray);
@@ -48,9 +59,22 @@ export default function Provider({ children }) {
       const res = await fetch(url);
       const resJson = await res.json();
       const { results } = resJson;
-      setPlanets(results.map(removeResidents));
-      setFilter(results.map(removeResidents));
-      setFilter2(results.map(removeResidents));
+
+      const sorted = results.map(removeResidents).sort((a, b) => {
+        const srt1 = a.name;
+        const srt2 = b.name;
+        const magicNumber = -1;
+        let srtVar;
+
+        if (srt1 === srt2) srtVar = 0;
+        if (srt1 > srt2) srtVar = 1;
+        if (srt1 < srt2) srtVar = magicNumber;
+
+        return srtVar;
+      });
+      setPlanets(sorted);
+      setFilter(sorted);
+      setFilter2(sorted);
       setLoading(false);
     };
     fetchApi();
@@ -104,6 +128,10 @@ export default function Provider({ children }) {
   [allFilters]);
 
   const context = {
+    sortValue,
+    setSortValue,
+    sortOptions,
+    setSortOptions,
     setFilter,
     filteredPlanets2,
     setCollumns,

@@ -7,10 +7,16 @@ export default function Table() {
     onChangeFilterValue,
     filterNumberValue, addNewFilter, greaterLessOrEqual,
     filterType, allFilters, setNewFilter, collumns,
-    filteredPlanets2, setFilter } = useContext(Context);
+    filteredPlanets2, setFilter, sortOptions, sortValue,
+    setSortValue } = useContext(Context);
   const headers = ['Name', 'Rotation Period', 'Orbital Period', 'Diameter', 'Climate',
     'Gravity', 'Terrain', 'Surface Water', 'Population', 'Films', 'Created', 'Edited',
     'URL'];
+
+  const handleSetSortValue = ({ target }) => {
+    const { name, value } = target;
+    setSortValue((i) => ({ ...i, [name]: value }));
+  };
 
   const removeFilter = ({ target: { value } }) => {
     const remFilters = [...allFilters.map(
@@ -23,6 +29,16 @@ export default function Table() {
   const removeAllFilters = (e) => {
     e.preventDefault();
     setNewFilter([]);
+  };
+
+  const handleClickSortButton = () => {
+    setSortValue({ ...sortValue });
+    const { collumn, sort } = sortValue;
+    let srt = filteredPlanets;
+    if (sort === 'ASC') srt = filteredPlanets.sort((a, b) => a[column] - b[collumn]);
+    else srt = filteredPlanets.sort((a, b) => b[column] - a[column]);
+
+    setFilter(srt.filter((t) => t[column] !== 'unknown'));
   };
   return (
     <div>
@@ -89,6 +105,39 @@ export default function Table() {
         Apply
 
       </button>
+      <select
+        onChange={ handleSetSortValue }
+        data-testid="column-sort"
+        name="column"
+      >
+        {
+          sortOptions.map((o, i) => <option key={ i } value={ o }>{o}</option>)
+        }
+      </select>
+      <input
+        onChange={ handleSetSortValue }
+        type="radio"
+        value="ASC"
+        name="sort"
+        data-testid="column-sort-input-asc"
+      />
+      Ascendente
+      <input
+        onChange={ handleSetSortValue }
+        type="radio"
+        value="DESC"
+        name="sort"
+        data-testid="column-sort-input-desc"
+      />
+      Descendente
+      <button
+        type="button"
+        data-testid="column-sort-button"
+        onClick={ () => handleClickSortButton() }
+      >
+        Sort
+      </button>
+
       {
         isLoading ? (<p>Loading...</p>)
 
@@ -106,7 +155,7 @@ export default function Table() {
                 {
                   filteredPlanets.map((planet) => (
                     <tr key={ planet.url }>
-                      <td>{planet.name}</td>
+                      <td data-testid="planet-name">{planet.name}</td>
                       <td>{planet.rotation_period}</td>
                       <td>{planet.orbital_period}</td>
                       <td>{planet.diameter}</td>
