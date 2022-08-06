@@ -33,9 +33,9 @@ export default function Table() {
 
   const handleClickSortButton = () => {
     setSortValue({ ...sortValue });
-    const { collumn, sort } = sortValue;
+    const { column, sort } = sortValue;
     let srt = filteredPlanets;
-    if (sort === 'ASC') srt = filteredPlanets.sort((a, b) => a[column] - b[collumn]);
+    if (sort === 'ASC') srt = filteredPlanets.sort((a, b) => a[column] - b[column]);
     else srt = filteredPlanets.sort((a, b) => b[column] - a[column]);
 
     setFilter(srt.filter((t) => t[column] !== 'unknown'));
