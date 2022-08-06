@@ -31,7 +31,7 @@ test("Checa maior que", async () => {
 test("Checa menor que", async () => {
   jest.spyOn(global, "fetch");
   global.fetch.mockResolvedValue({
-    json: jest.fn().mockResolvedValue(planetResponse),
+    json: jest.fn().mockResolvedValue(testData),
   });
 
   render(<App />);
@@ -53,7 +53,7 @@ test("Checa menor que", async () => {
 test("Checa igual a", async () => {
   jest.spyOn(global, "fetch");
   global.fetch.mockResolvedValue({
-    json: jest.fn().mockResolvedValue(planetResponse),
+    json: jest.fn().mockResolvedValue(testData),
   });
 
   render(<App />);
@@ -75,7 +75,7 @@ test("Checa igual a", async () => {
 test("Filtro por nome", async () => {
   jest.spyOn(global, "fetch");
   global.fetch.mockResolvedValue({
-    json: jest.fn().mockResolvedValue(planetResponse),
+    json: jest.fn().mockResolvedValue(testData),
   });
 
   render(<App />);
@@ -91,7 +91,7 @@ test("Filtro por nome", async () => {
 test("Remover todos filtros", async () => {
   jest.spyOn(global, "fetch");
   global.fetch.mockResolvedValue({
-    json: jest.fn().mockResolvedValue(planetResponse),
+    json: jest.fn().mockResolvedValue(testData),
   });
 
   render(<App />);
@@ -100,7 +100,7 @@ test("Remover todos filtros", async () => {
   const valueFilter = await screen.findByTestId("value-filter");
   const buttonFilter = await screen.findByTestId("button-filter");
   const removeFiltersButton = await screen.findByRole("button", {
-    name: /remove all filters/i,
+    name: /remover todos os filtros/i,
   });
 
   userEvent.selectOptions(columnFilter, "population");
@@ -121,7 +121,7 @@ test("Remover todos filtros", async () => {
 test("Remover um filtro", async () => {
   jest.spyOn(global, "fetch");
   global.fetch.mockResolvedValue({
-    json: jest.fn().mockResolvedValue(planetResponse),
+    json: jest.fn().mockResolvedValue(testData),
   });
 
   render(<App />);
@@ -147,3 +147,12 @@ test("Remover um filtro", async () => {
   const updatedRows = await screen.findAllByRole("row");
   expect(updatedRows).toHaveLength(11);
 });
+
+test("Testa radios", () => {
+  render(<App/>)
+const radioAsc = screen.getByTestId('column-sort-input-asc');
+const radioDesc = screen.getByTestId('column-sort-input-desc');
+
+expect(radioAsc).toBeInTheDocument();
+expect(radioDesc).toBeInTheDocument();
+})

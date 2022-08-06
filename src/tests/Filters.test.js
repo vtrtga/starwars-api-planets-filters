@@ -100,7 +100,7 @@ test("Remover todos filtros", async () => {
   const valueFilter = await screen.findByTestId("value-filter");
   const buttonFilter = await screen.findByTestId("button-filter");
   const removeFiltersButton = await screen.findByRole("button", {
-    name: /remove all filters/i,
+    name: /remover todos os filtros/i,
   });
 
   userEvent.selectOptions(columnFilter, "population");
